@@ -21,7 +21,7 @@ func weekdayOffset(d time.Time) int {
 	return int(wd) - 1
 }
 
-func workDays(t time.Time) int {
+func weekdays(t time.Time) int {
 	// WARN: Doesn't take holidays into account
 
 	// Copied from https://stackoverflow.com/questions/31327124/how-to-calculate-number-of-business-days-in-golang

@@ -14,7 +14,7 @@ func main() {
 
 	hourlyRate, _ = decimal.NewFromString("10.07")
 
-	var workDays = workDays(time.Now())
+	var workDays = weekdays(time.Now())
 	var cost = decimal.NewFromInt(int64(workDays)).Mul(hourlyRate)
 
 	fmt.Printf("workdays %d\ncost %s\n", workDays, cost.StringFixedBank(2))

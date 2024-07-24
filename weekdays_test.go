@@ -26,7 +26,7 @@ func TestWorkDays(t *testing.T) {
 	}
 
 	for _, tc := range tests {
-		got := workDays(tc.input)
+		got := weekdays(tc.input)
 		if got != tc.days {
 			t.Fatalf("Got %d days for %v, wanted %d", got, tc.input, tc.days)
 		}
