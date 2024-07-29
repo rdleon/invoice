@@ -1,0 +1,160 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>INVOICE</title>
+        <style>
+        @page {
+          size: A4;
+          margin: 0;
+        }
+        html,
+        body {
+            height: 297mm;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+ 
+        /* Style content with shaded background */
+        .content {
+            /* Adjust the width as needed */
+            height: 80%;
+            /* Adjust the height as needed*/
+            padding: 20px;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .number div {
+            display: inline-block;
+        }
+
+        .number div.id {
+            float: right;
+            text-align: right;
+        }
+
+        table#items {
+            width: 100%;
+            padding-top: 20px;
+            border-collapse: collapse;
+        }
+
+        table#items th, table#items td {
+            border: 1px solid;
+        }
+
+        td.description {
+            width: 310px;
+        }
+
+        td.total {
+            width: 80px;
+            text-align: right;
+        }
+
+        td.quantity {
+            text-align: center;
+        }
+
+        td.amount {
+            text-align: right;
+        }
+
+        td.total-label {
+            text-align: right;
+            font-weight: bold;
+        }
+
+        #parts .label {
+            padding-right: 8px;
+            font-weight: bold;
+        }
+
+        #parts span {
+            display: block;
+        }
+
+        #parts td {
+            vertical-align: top;
+        }
+
+
+        .provider {
+            display: inline-block;
+            height: 80px;
+        }
+
+        .client {
+            display: inline-block;
+            height: 80px;
+            width: 50%
+        }
+
+        </style>
+    </head>
+    <body>
+        <div class="content">
+            <section id="parts">
+                <table>
+                    <tr>
+                        <td class="label">To:<br>Attn:</td>
+                        <td>
+                            <span>Company LLC</span>
+                            <span>Name Last Name</span>
+                            <span>Suite 466 94460 Shayne Locks,</span>
+                            <span>Kenethshire, MT 70035-4401<span>
+                        </td>
+                        <td class="label">From:</td>
+                        <td>
+                            <span>Name Last Name</span>
+                            <span>Apt. 775 97457 Rempel Station,</span>
+                            <span>West Shelton, MI 49056</span>
+                        </td>
+                    </tr>
+                </table>
+            </section>
+            <section>
+                <h1>Invoice</h1>
+            </section>
+            <section class="number">
+                <div class="date">
+                    <b>DATE OF SUBMISSION</b>
+                    <span>14-Jun-24</span>
+                </div>
+                <div class="id">
+                    <b>INVOICE ID</b>
+                    <span>Jun2024</span>
+                </div>
+            </section>
+            <section>
+                <table id="items">
+                    <tr>
+                        <th>Description</th>
+                        <th>Quantity (number of days worked)</th>
+                        <th>Rate USD (daily rate)</th>
+                        <th>Total USD</th>
+                        <th>Comment/Notes</th>
+                    </tr>
+                    <tr>
+                        <td class="description">Software Engineering - Project</td>
+                        <td class="quantity">23</td>
+                        <td class="amount">10.70</td>
+                        <td class="total">246.10</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="total-label">TOTAL DUE</td>
+                        <td class="amount">246.10</td>
+                    </tr>
+                </table>
+            </section>
+        </div>
+    </body>
