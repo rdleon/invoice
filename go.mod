@@ -1,4 +1,4 @@
-module github.com/rdleon/monthly
+module github.com/rdleon/invoice
 
 go 1.20
 
