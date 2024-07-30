@@ -2,7 +2,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>INVOICE</title>
+        <title>INVOICE {{ .Serial }}</title>
         <style>
         @page {
           size: A4;
@@ -127,11 +127,11 @@
             <section class="number">
                 <div class="date">
                     <b>DATE OF SUBMISSION</b>
-                    <span>14-Jun-24</span>
+                    <span>{{ .Date }}</span>
                 </div>
                 <div class="id">
                     <b>INVOICE ID</b>
-                    <span>Jun2024</span>
+                    <span>{{ .Serial }}</span>
                 </div>
             </section>
             <section>

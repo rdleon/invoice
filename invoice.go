@@ -4,11 +4,20 @@ package main
 import (
 	"flag"
 	"fmt"
+	"html/template"
 	"os"
 	"time"
 
 	"github.com/shopspring/decimal"
 )
+
+const templateFile = "./templates/simple.tmpl"
+
+type Invoice struct {
+	Date   string
+	Serial string
+	Item   Item
+}
 
 type Item struct {
 	quantity    decimal.Decimal
@@ -22,8 +31,19 @@ func outputText(item Item) {
 	fmt.Printf("%s, %s, %s, %s\n", item.description, item.quantity.StringFixed(0), item.cost.StringFixedBank(2), item.subtotal.StringFixedBank(2))
 }
 
-func outputHtml(item Item) {
-	fmt.Printf("<td>%s</td><td>%s</td><td>%s</td><td>%s</td>\n", item.description, item.quantity.StringFixed(0), item.cost.StringFixedBank(2), item.subtotal.StringFixedBank(2))
+func outputHtml(invoice Invoice) {
+	tmpl, err := template.New(templateFile).ParseFiles(templateFile)
+
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "Failed opening the HTML template", err)
+		return
+	}
+
+	err = tmpl.ExecuteTemplate(os.Stdout, "simple.tmpl", invoice)
+
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "Failed reading the HTML template", err)
+	}
 }
 
 func main() {
@@ -65,7 +85,12 @@ func main() {
 	item.subtotal = item.quantity.Mul(item.cost)
 
 	if htmlOutput {
-		outputHtml(item)
+		var invoice = Invoice{
+			Item:   item,
+			Date:   "2024-Jun-29",
+			Serial: "Jun2024",
+		}
+		outputHtml(invoice)
 		return
 	}
 
