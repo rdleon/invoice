@@ -54,6 +54,17 @@ func main() {
 	var daysOutOfOffice int
 	var htmlOutput bool
 
+	flag.Usage = func() {
+		fmt.Fprintf(flag.CommandLine.Output(),
+			"Usage:\n\t %s [OPTIONS] DESCRIPTION DAILYRATE\n\n",
+			os.Args[0])
+		fmt.Fprintf(flag.CommandLine.Output(),
+			"Creates a monthly invoice based on the current months weekdays "+
+				"and daily rate\n\n")
+		fmt.Fprintln(flag.CommandLine.Output(), "Options:")
+		flag.PrintDefaults()
+	}
+
 	flag.IntVar(&daysOutOfOffice, "out-of-office", 0, "Days not worked this month")
 	flag.BoolVar(&htmlOutput, "html", false, "Output the invoice in HTML")
 
@@ -62,7 +73,7 @@ func main() {
 	args := flag.Args()
 
 	if len(args) != 2 {
-		fmt.Fprintln(os.Stderr, "Wrong number of arguments")
+		flag.Usage()
 		return
 	}
 

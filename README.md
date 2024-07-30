@@ -1,7 +1,7 @@
-# Generate an invoice
+# Generate a monthly invoice
 
 Given a description, an daily rate and a template generate an
-html template for worked days in the current month.
+HTML template for worked days in the current month.
 
 The program calculates the weekdays in the current month,
 optionally subtrackts the out of office days and outputs the
