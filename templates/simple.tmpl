@@ -127,7 +127,7 @@
             <section class="number">
                 <div class="date">
                     <b>DATE OF SUBMISSION</b>
-                    <span>{{ .Date }}</span>
+                    <span>{{ .Date.Format "02-Jan-2006" }}</span>
                 </div>
                 <div class="id">
                     <b>INVOICE ID</b>
@@ -144,15 +144,15 @@
                         <th>Comment/Notes</th>
                     </tr>
                     <tr>
-                        <td class="description">Software Engineering - Project</td>
-                        <td class="quantity">23</td>
-                        <td class="amount">10.70</td>
-                        <td class="total">246.10</td>
+                        <td class="description">{{ .Item.Description }}</td>
+                        <td class="quantity">{{ .Item.Quantity.StringFixed 0  }}</td>
+                        <td class="amount">{{ .Item.Cost.StringFixedBank 2 }}</td>
+                        <td class="total">{{ .Item.Subtotal.StringFixedBank 2 }}</td>
                         <td></td>
                     </tr>
                     <tr>
                         <td colspan="4" class="total-label">TOTAL DUE</td>
-                        <td class="amount">246.10</td>
+                        <td class="amount">{{ .Item.Subtotal.StringFixedBank 2 }}</td>
                     </tr>
                 </table>
             </section>

@@ -14,7 +14,7 @@ import (
 const templateFile = "./templates/simple.tmpl"
 
 type Invoice struct {
-	Date   string
+	Date   time.Time
 	Serial string
 	Item   Item
 }
@@ -89,10 +89,11 @@ func main() {
 	item.Subtotal = item.Quantity.Mul(item.Cost)
 
 	if htmlOutput {
+		now := time.Now()
 		var invoice = Invoice{
 			Item:   item,
-			Date:   "2024-Jun-29",
-			Serial: "Jun2024",
+			Date:   now,
+			Serial: now.Format("Jan2006"),
 		}
 		outputHtml(invoice)
 		return
