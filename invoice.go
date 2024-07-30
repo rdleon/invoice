@@ -20,15 +20,19 @@ type Invoice struct {
 }
 
 type Item struct {
-	quantity    decimal.Decimal
-	cost        decimal.Decimal
-	description string
-	subtotal    decimal.Decimal
+	Quantity    decimal.Decimal
+	Cost        decimal.Decimal
+	Description string
+	Subtotal    decimal.Decimal
 }
 
 func outputText(item Item) {
 	fmt.Println("Description, quantity, rate, total")
-	fmt.Printf("%s, %s, %s, %s\n", item.description, item.quantity.StringFixed(0), item.cost.StringFixedBank(2), item.subtotal.StringFixedBank(2))
+	fmt.Printf("%s, %s, %s, %s\n",
+		item.Description,
+		item.Quantity.StringFixed(0),
+		item.Cost.StringFixedBank(2),
+		item.Subtotal.StringFixedBank(2))
 }
 
 func outputHtml(invoice Invoice) {
@@ -72,17 +76,17 @@ func main() {
 		workDays = 0
 	}
 
-	item.description = args[0]
+	item.Description = args[0]
 
-	item.cost, err = decimal.NewFromString(args[1])
+	item.Cost, err = decimal.NewFromString(args[1])
 
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "Error parsing the daily rate")
 		return
 	}
 
-	item.quantity = decimal.NewFromInt(int64(workDays))
-	item.subtotal = item.quantity.Mul(item.cost)
+	item.Quantity = decimal.NewFromInt(int64(workDays))
+	item.Subtotal = item.Quantity.Mul(item.Cost)
 
 	if htmlOutput {
 		var invoice = Invoice{
