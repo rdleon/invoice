@@ -2,6 +2,7 @@
 package main
 
 import (
+	"encoding/json"
 	"flag"
 	"fmt"
 	"html/template"
@@ -14,16 +15,17 @@ import (
 const templateFile = "./templates/simple.tmpl"
 
 type Invoice struct {
-	Date   time.Time
-	Serial string
-	Item   Item
+	Date   time.Time       `json:"date"`
+	Serial string          `json:"serial"`
+	Item   Item            `json:"item"`
+	Total  decimal.Decimal `json:"total"`
 }
 
 type Item struct {
-	Quantity    decimal.Decimal
-	Cost        decimal.Decimal
-	Description string
-	Subtotal    decimal.Decimal
+	Quantity    decimal.Decimal `json:"quantity"`
+	Cost        decimal.Decimal `json:"cost"`
+	Description string          `json:"description"`
+	Subtotal    decimal.Decimal `json:"subtotal"`
 }
 
 func outputText(item Item) {
@@ -53,6 +55,7 @@ func outputHtml(invoice Invoice) {
 func main() {
 	var daysOutOfOffice int
 	var htmlOutput bool
+	var jsonOutput bool
 
 	flag.Usage = func() {
 		fmt.Fprintf(flag.CommandLine.Output(),
@@ -67,6 +70,7 @@ func main() {
 
 	flag.IntVar(&daysOutOfOffice, "out-of-office", 0, "Days not worked this month")
 	flag.BoolVar(&htmlOutput, "html", false, "Output the invoice in HTML")
+	flag.BoolVar(&jsonOutput, "json", false, "Output the invoice as a JSON string")
 
 	flag.Parse()
 
@@ -74,6 +78,12 @@ func main() {
 
 	if len(args) != 2 {
 		flag.Usage()
+		return
+	}
+
+	if jsonOutput && htmlOutput {
+		flag.Usage()
+		fmt.Fprintln(flag.CommandLine.Output(), "ERROR: --html and --json are mutually exclusive options.")
 		return
 	}
 
@@ -99,14 +109,24 @@ func main() {
 	item.Quantity = decimal.NewFromInt(int64(workDays))
 	item.Subtotal = item.Quantity.Mul(item.Cost)
 
-	if htmlOutput {
+	if htmlOutput || jsonOutput {
 		now := time.Now()
 		var invoice = Invoice{
 			Item:   item,
 			Date:   now,
 			Serial: now.Format("Jan2006"),
+			// We only support one item!?
+			Total: item.Subtotal,
 		}
-		outputHtml(invoice)
+
+		if htmlOutput {
+			outputHtml(invoice)
+
+		} else if jsonOutput {
+			encoder := json.NewEncoder(os.Stdout)
+			encoder.Encode(invoice)
+		}
+
 		return
 	}
 
